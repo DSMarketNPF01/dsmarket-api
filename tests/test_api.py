@@ -1,6 +1,13 @@
 import pytest
+import sys
+import os
 from fastapi.testclient import TestClient
-from src.api import app  # Importamos la API desde `api.py`
+
+
+# Agregar la raíz del proyecto al PYTHONPATH
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from api import app  # Importamos la API desde `api.py`
 
 client = TestClient(app)
 

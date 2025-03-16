@@ -44,7 +44,14 @@ class SalesInput(BaseModel):
 @app.post("/predict")
 def predict(sales_input: SalesInput):
     # Convertir entrada en DataFrame
-    data = pd.DataFrame([sales_input.dict()])
+    # data = pd.DataFrame([sales_input.dict()])
+    expected_columns = ["year", "month", "quarter", "week", "day", "weekday_int", "w",
+                    "holidays_boolean", "event_boolean", "lag_1", "lag_7", "lag_14",
+                    "lag_21", "lag_28", "lag_1_inc", "lag_7_inc", "lag_14_inc",
+                    "lag_21_inc", "lag_28_inc"]
+
+    data = pd.DataFrame([sales_input.model_dump()], columns=expected_columns)
+
     
     # Hacer la predicción
     prediction = model.predict(fh=[1], X=data)
@@ -53,3 +60,7 @@ def predict(sales_input: SalesInput):
     predicted_value = float(prediction.values[0][0]) if isinstance(prediction.values[0], list) else float(prediction.values[0])
 
     return {"predicted_sales": round(predicted_value, 2)}
+
+@app.get("/")
+def read_root():
+    return {"message": "API de predicción de ventas en funcionamiento"}
