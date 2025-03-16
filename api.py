@@ -44,6 +44,7 @@ class SalesInput(BaseModel):
 @app.post("/predict")
 def predict(sales_input: SalesInput):
     # Convertir entrada en DataFrame
+    # data = pd.DataFrame([sales_input.dict()])
     expected_columns = ["year", "month", "quarter", "week", "day", "weekday_int", "w",
                     "holidays_boolean", "event_boolean", "lag_1", "lag_7", "lag_14",
                     "lag_21", "lag_28", "lag_1_inc", "lag_7_inc", "lag_14_inc",
