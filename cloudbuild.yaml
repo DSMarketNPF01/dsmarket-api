@@ -1,3 +1,6 @@
+options:
+  logging: CLOUD_LOGGING_ONLY  # Esto evita que Cloud Build requiera un bucket de logs
+
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api', '.']
