@@ -1,0 +1,9 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'sales-api', '--image', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api', '--platform', 'managed', '--region', 'europe-west1', '--allow-unauthenticated']
