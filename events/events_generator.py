@@ -169,7 +169,7 @@ def _get_holidays_for_cities(cities, year):
         
         # Verificar qué festivos nacionales no están reflejados en las ciudades y agregarlos
         def add_missing_holidays(city_df, city_name):
-            missing_holidays = us_df[~us_df["date"].isin(city_df["date"])]
+            missing_holidays = us_df[~us_df["date"].isin(city_df["date"])].copy()
             missing_holidays["region"] = city_name
             return pd.concat([city_df, missing_holidays], ignore_index=True)
         
