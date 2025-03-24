@@ -1,5 +1,5 @@
 options:
-  logging: CLOUD_LOGGING_ONLY  # Esto evita que Cloud Build requiera un bucket de logs
+  logging: CLOUD_LOGGING_ONLY
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
@@ -9,4 +9,14 @@ steps:
     args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api']
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['run', 'deploy', 'sales-api', '--image', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api', '--platform', 'managed', '--region', 'europe-west1', '--allow-unauthenticated']
+    args:
+      - 'run'
+      - 'deploy'
+      - 'sales-api'
+      - '--image'
+      - 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'europe-west1'
+      - '--allow-unauthenticated'  # quítalo si deseas restringir acceso con IAM
