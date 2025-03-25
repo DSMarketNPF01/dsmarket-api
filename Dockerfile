@@ -1,20 +1,19 @@
 # Usa una versión moderna y estable de Python
 FROM python:3.11-slim
-
-# Establece el directorio de trabajo dentro del contenedor
+ 
+# Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia solo los archivos necesarios para instalar dependencias primero (cache de capas Docker)
+# Copiar archivos necesarios al contenedor
 COPY requirements.txt .
+COPY api.py .
+COPY models_cluster.pkl .
 
-# Instala dependencias
+# Instalar dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia el resto del código (incluyendo subcarpetas)
-COPY . .
-
-# Expón el puerto requerido por Cloud Run
+# Exponer el puerto 8080 (requerido por Cloud Run)
 EXPOSE 8080
 
-# Comando para ejecutar la API
+# Comando para ejecutar la API cuando el contenedor se inicie
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080"]
