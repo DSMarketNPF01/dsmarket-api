@@ -27,8 +27,8 @@ steps:
       - '--allow-unauthenticated'
       - '--vpc-connector'
       - 'dsmarket-conector'
-      - '--egress-settings'
-      - 'all'
+      - '--vpc-egress'
+      - 'all-traffic'
       - '--set-env-vars'
       - |
         ALLOYDB_USER=postgres,
