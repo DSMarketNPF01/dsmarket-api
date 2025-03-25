@@ -20,7 +20,7 @@ pandas
 
 # Machine Learning
 scikit-learn
-numpy=
+numpy
 scipy
 
 # Additional dependencies
