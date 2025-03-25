@@ -9,7 +9,7 @@ steps:
     args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api']
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    args:
+   args:
       - 'run'
       - 'deploy'
       - 'sales-api'
@@ -19,4 +19,10 @@ steps:
       - 'managed'
       - '--region'
       - 'europe-west1'
-      - '--allow-unauthenticated'  # quítalo si deseas restringir acceso con IAM
+      - '--port'
+      - '8080'  # Asegura que Cloud Run espera en el puerto correcto
+      - '--timeout'
+      - '600'  # Aumenta a 10 minutos para dar tiempo al inicio
+      - '--allow-unauthenticated'  # Mantienes acceso público
+      - '--verbosity'
+      - 'debug'  # Más detalles en los logs si falla
