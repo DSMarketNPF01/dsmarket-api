@@ -26,3 +26,7 @@ steps:
       - '--allow-unauthenticated'  # Mantienes acceso público
       - '--verbosity'
       - 'debug'  # Más detalles en los logs si falla
+      - '--set-env-vars'
+      - 'ALLOYDB_USER=postgres,ALLOYDB_PASSWORD=*market_9991,ALLOYDB_HOST=34.175.172.72,ALLOYDB_PORT=5432,ALLOYDB_DB=dsmarket'
+
+
