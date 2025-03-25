@@ -9,7 +9,7 @@ steps:
     args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api']
 
   - name: 'gcr.io/cloud-builders/gcloud'
-   args:
+    args:
       - 'run'
       - 'deploy'
       - 'sales-api'
