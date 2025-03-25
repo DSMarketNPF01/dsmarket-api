@@ -20,13 +20,18 @@ steps:
       - '--region'
       - 'europe-west1'
       - '--port'
-      - '8080'  # Asegura que Cloud Run espera en el puerto correcto
+      - '8080'
       - '--timeout'
-      - '600'  # Aumenta a 10 minutos para dar tiempo al inicio
-      - '--allow-unauthenticated'  # Mantienes acceso público
-      - '--verbosity'
-      - 'debug'  # Más detalles en los logs si falla
+      - '600'
+      - '--allow-unauthenticated'
+      - '--vpc-connector'
+      - 'dsmarket-conector'
+      - '--egress-settings'
+      - 'all'
       - '--set-env-vars'
-      - 'ALLOYDB_USER=postgres,ALLOYDB_PASSWORD=*market_9991,ALLOYDB_HOST=34.175.172.72,ALLOYDB_PORT=5432,ALLOYDB_DB=dsmarket'
-
-
+      - |
+        ALLOYDB_USER=postgres,
+        ALLOYDB_PASSWORD=*market_9991,
+        ALLOYDB_HOST=34.175.172.72,
+        ALLOYDB_PORT=5432,
+        ALLOYDB_DB=dsmarket
