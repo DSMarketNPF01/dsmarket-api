@@ -22,6 +22,7 @@ pandas
 scikit-learn
 numpy
 scipy
+xgboost
 
 # Additional dependencies
 python-multipart
