@@ -3,10 +3,10 @@ options:
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api', '.']
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api:$SHORT_SHA', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api']
+    args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api:$SHORT_SHA']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
     entrypoint: gcloud
@@ -15,24 +15,11 @@ steps:
       - 'deploy'
       - 'sales-api'
       - '--image'
-      - 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api'
+      - 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api:$SHORT_SHA'
       - '--platform'
       - 'managed'
       - '--region'
       - 'europe-west1'
       - '--port'
       - '8080'
-      - '--timeout'
-      - '600'
       - '--allow-unauthenticated'
-      - '--vpc-connector'
-      - 'dsmarket-conector'
-      - '--vpc-egress'
-      - 'all-traffic'
-      - '--set-env-vars'
-      - |
-        ALLOYDB_USER=postgres,
-        ALLOYDB_PASSWORD=*market_9991,
-        ALLOYDB_HOST=34.175.172.72,
-        ALLOYDB_PORT=5432,
-        ALLOYDB_DB=dsmarket
