@@ -6,14 +6,14 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Excluir archivos de datos generales
+*.csv
+*.pkl
+
 # Incluir archivos específicos
 !df_api.csv
 !models_cluster.pkl
 !df_cluster_ST.pkl
-
-# Excluir archivos de datos generales
-*.csv
-*.pkl
 
 # Excluir archivos específicos de la API
 checks.py
