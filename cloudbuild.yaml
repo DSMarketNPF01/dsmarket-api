@@ -3,10 +3,10 @@ options:
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api:$SHORT_SHA', '.']
+    args: ['build', '-t', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api:$SHORT_SHA']
+    args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
     entrypoint: gcloud
