@@ -2,8 +2,8 @@
 import pandas as pd
 import os
 
-INPUT_FILE = "df_total.pkl"
-OUTPUT_FILE = "df_total.csv"
+INPUT_FILE = "..\df_api.pkl"
+OUTPUT_FILE = "..\df_api.csv"
 
 # Verifica que el archivo .pkl existe
 if not os.path.exists(INPUT_FILE):

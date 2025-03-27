@@ -11,6 +11,7 @@ __pycache__/
 *.pkl
 
 # Incluir archivos específicos
+!models_cluster.pkl
 !df_cluster_ST.pkl
 !df_api.pkl
 
