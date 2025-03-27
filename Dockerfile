@@ -4,24 +4,14 @@ FROM python:3.11-slim
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Actualizar pip e instalar dependencias
-COPY requirements.txt .
+# Copiar los archivos del proyecto al contenedor (df_total.pkl está excluido por .dockerignore)
+COPY . /app
+
+# Instalar las dependencias del proyecto desde el archivo requirements.txt
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Copiar el código fuente de la API
-COPY api.py .
-COPY run_local.py .
-COPY features/ ./features/
-COPY events/ ./events/
-COPY data/ ./data/
-COPY scripts/ ./scripts/
+# Exponer el puerto en el que la API se ejecutará (por ejemplo, 8000 para FastAPI)
+EXPOSE 8000
 
-# Opcional: Copiar modelos si no los descargas desde un storage externo
-COPY models_cluster.pkl .
-COPY df_cluster_ST.pkl .
-
-# Exponer el puerto 8080 (requerido por Cloud Run)
-EXPOSE 8080
-
-# Comando para ejecutar la API
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080"]
+# Comando para ejecutar la API (suponiendo que uses FastAPI, puedes ajustarlo según el framework)
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]

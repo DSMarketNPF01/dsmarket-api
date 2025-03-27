@@ -1,14 +1,27 @@
+# Excluir archivos de configuración y variables de entorno
 .env
-__pycache__/
-*.pkl
-*.csv
-# Ignorar modelo entrenado
-best_model.pkl
-model.pkl
 
+# Excluir archivos generados por Python
+__pycache__/
 *.pyc
 *.pyo
-.env
+
+# Excluir archivos de datos generales
+*.csv
+*.pkl
+
+# Incluir archivos específicos
+!df_cluster_ST.pkl
+!df_api.pkl
+
+# Excluir archivos específicos de la API
+api_web.py
+api_local.py
+checks.py
+
+# Excluir las carpetas 'data' y 'scripts'
+data/
+scripts/
+
+# Excluir archivos del sistema
 .DS_Store
-
-

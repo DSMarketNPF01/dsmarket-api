@@ -1,0 +1,8 @@
+df_total.pkl
+api_web.py
+checks.py
+# Excluir la carpeta 'data'
+data/
+
+# Excluir la carpeta 'scripts'
+scripts/
