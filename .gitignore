@@ -15,9 +15,9 @@ __pycache__/
 !df_api.pkl
 
 # Excluir archivos específicos de la API
+checks.py
 api_web.py
 api_local.py
-checks.py
 
 # Excluir las carpetas 'data' y 'scripts'
 data/

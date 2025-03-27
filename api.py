@@ -220,6 +220,27 @@ def predict(request: PredictionRequest):
     "store": store,
     "predictions": results
     }
+
+@app.get("/data/structure")
+def get_structure():
+    # Filtrar los datos necesarios de 'df_bbdd'
+    structure = {}
+    
+    # Iterar sobre los registros únicos de 'store', 'department' y 'item'
+    for _, row in df_bbdd[['store', 'department', 'item']].drop_duplicates().iterrows():
+        store = row['store']
+        dept = row['department']
+        item = row['item']
+        
+        if store not in structure:
+            structure[store] = {}
+        if dept not in structure[store]:
+            structure[store][dept] = []
+        if item not in structure[store][dept]:
+            structure[store][dept].append(item)
+
+    return structure
+
 @app.get("/")
 def root():
     return {"message": "API de predicción de ventas funcionando ✅"}
