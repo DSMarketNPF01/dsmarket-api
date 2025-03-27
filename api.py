@@ -17,7 +17,8 @@ print("🧠 Cargando modelos de predicción...")
 models = pd.read_pickle('models_cluster.pkl')
 
 # Carga de datos base (histórico, regiones, precios...)
-df_bbdd = pd.read_pickle('df_api.pkl')
+print(f"📂 Cargando base de datos...")
+df_bbdd = pd.read_csv('df_api.csv')
 
 df_stores = df_bbdd[['store', 'store_code']].drop_duplicates().set_index('store')
 prices_bbdd = (
