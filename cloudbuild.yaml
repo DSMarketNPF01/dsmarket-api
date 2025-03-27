@@ -15,7 +15,7 @@ steps:
       - 'deploy'
       - 'sales-api'
       - '--image'
-      - 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api:$SHORT_SHA'
+      - 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api:latest'
       - '--platform'
       - 'managed'
       - '--region'
