@@ -97,11 +97,6 @@ def predict(request: PredictionRequest):
     id_item_store = f"{item}_{store_code}"
     sell_price = get_latest_price(id_item_store, str(last_date))
 
-    # Obtener peso del id dentro del cluster
-    # prediction_date o last_date?
-    id_item_store_weight = get_weight_for_id_and_date(id_item_store, last_date, engine)
-
-
     # Generar features
     df_input = generate_dataframe(
         store_code=store_code,
@@ -115,19 +110,56 @@ def predict(request: PredictionRequest):
     print("📊 Features generadas correctamente.")
 
     # Generar horizonte y predecir
-    fh = generate_fh_from_date(last_date, horizon=1)
-    prediction = model_cluster.predict(fh=fh, X=df_input)
-    y_pred = float(prediction.values[0])
-    y_pred_weighted = y_pred * id_item_store_weight
-    print(f"✅ Predicción realizada: {y_pred_weighted:.2f}")
+    # fh = generate_fh_from_date(last_date, horizon=1)
+    fh = generate_fh_from_date(last_date, horizon=28)
+    # prediction = model_cluster.predict(fh=fh, X=df_input)
+    predictions = model_cluster.predict(fh=fh, X=df_input)
+    y_pred = predictions.values
+
+    dates = pd.date_range(start=prediction_date, periods=len(y_pred), freq='D')
+
+    # Se calcula el peso de ese artículo en los últimos 30 días
+    id_weight = get_weight_for_id_and_date(id_item_store, last_date, engine)
+
+    y_pred_weighted = [round(float(y) * id_weight, 2) for y in y_pred]
+    print("✅ Predicción realizada:")
+
+    print(f"✅ Predicciones generadas para {len(y_pred_weighted)} días.")
+
+    results = [
+        {"date": d.strftime("%Y-%m-%d"), "predicted_sales": y}
+        for d, y in zip(dates, y_pred_weighted)
+    ]
 
     return {
-        "item": item,
-        "store": store,
-        "date": prediction_date.strftime("%Y-%m-%d"),
-        "predicted_sales": round(y_pred_weighted, 2)
+    "item": item,
+    "store": store,
+    "predictions": results
     }
 
 @app.get("/")
 def root():
     return {"message": "API de predicción de ventas funcionando con AlloyDB ✅"}
+
+@app.get("/data/structure")
+def get_structure():
+    query = """
+        SELECT DISTINCT store, department, item
+        FROM historical_sales
+    """
+    df = pd.read_sql_query(query, engine)
+
+    structure = {}
+    for _, row in df.iterrows():
+        store = row['store']
+        dept = row['department']
+        item = row['item']
+        if store not in structure:
+            structure[store] = {}
+        if dept not in structure[store]:
+            structure[store][dept] = []
+        if item not in structure[store][dept]:
+            structure[store][dept].append(item)
+
+    return structure
+

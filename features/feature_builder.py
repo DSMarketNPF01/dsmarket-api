@@ -23,7 +23,7 @@ def generate_dataframe(store_code, region, item, date_API, sell_price, events_df
         "weekday_int": [date_API.weekday() + 1],
         "holidays_boolean": [holiday_flag],
         "event_boolean": [event_flag],
-        # Puedes añadir "sell_price": [sell_price] si tu modelo lo necesita
+        # "sell_price": [sell_price]
     }
 
     return pd.DataFrame(data)
