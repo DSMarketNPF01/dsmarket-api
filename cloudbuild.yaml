@@ -8,7 +8,8 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'europe-west1-docker.pkg.dev/mlops-nuclio-022025/ds-market/sales-api']
 
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
+    entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
@@ -19,4 +20,19 @@ steps:
       - 'managed'
       - '--region'
       - 'europe-west1'
-      - '--allow-unauthenticated'  # quítalo si deseas restringir acceso con IAM
+      - '--port'
+      - '8080'
+      - '--timeout'
+      - '600'
+      - '--allow-unauthenticated'
+      - '--vpc-connector'
+      - 'dsmarket-conector'
+      - '--vpc-egress'
+      - 'all-traffic'
+      - '--set-env-vars'
+      - |
+        ALLOYDB_USER=postgres,
+        ALLOYDB_PASSWORD=*market_9991,
+        ALLOYDB_HOST=34.175.172.72,
+        ALLOYDB_PORT=5432,
+        ALLOYDB_DB=dsmarket

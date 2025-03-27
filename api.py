@@ -5,6 +5,7 @@ from pydantic import BaseModel
 import pandas as pd
 from datetime import timedelta
 import pickle
+import sys, os
 
 from features.feature_builder import generate_dataframe
 from features.forecasting_utils import generate_fh_from_date
@@ -15,8 +16,25 @@ from data.database import (
     get_weight_for_id_and_date
 )
 
-print("🧠 Cargando modelos de predicción...")
-models = pd.read_pickle('models_cluster.pkl')
+# print("🧠 Cargando modelos de predicción...")
+# models = pd.read_pickle('models_cluster.pkl')
+
+# Imprimir información de debugging
+print(f"Directorio de trabajo: {os.getcwd()}")
+print(f"Ruta del script: {os.path.dirname(os.path.abspath(__file__))}")
+print(f"Contenido del directorio: {os.listdir('.')}")
+
+# Ruta absoluta al modelo
+MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models_cluster.pkl')
+
+try:
+    print(f"🔍 Intentando cargar modelo desde: {MODEL_PATH}")
+    models = pd.read_pickle(MODEL_PATH)
+    print("✅ Modelo cargado exitosamente")
+except FileNotFoundError as e:
+    print(f"❌ Error al cargar el modelo: {e}")
+    print(f"Archivos disponibles: {os.listdir('.')}")
+    sys.exit(1)
 
 print("🔗 Conectando a AlloyDB...")
 params = get_env_db_params()

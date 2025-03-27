@@ -1,12 +1,37 @@
 # requirements.txt
 fastapi
 uvicorn[standard]
-pandas
-scikit-learn
 sktime
 holidays
 convertdate
 psycopg2-binary
-sqlalchemy
 python-dotenv
+
+
+# Core libraries
+fastapi
+uvicorn
 pydantic
+
+# Database
+sqlalchemy
+psycopg2-binary
+pandas
+
+# Machine Learning
+scikit-learn
+numpy
+scipy
+xgboost
+
+# Additional dependencies
+python-multipart
+python-jose
+passlib
+
+# Observability
+opentelemetry-api
+opentelemetry-sdk
+
+# Extras
+python-dateutil
